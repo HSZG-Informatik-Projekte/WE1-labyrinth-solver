@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<title>Labyrinth Löser</title>
+  	<script src="js/p5.min.js"></script>
+  	<script src="js/p5.dom.min.js"></script>
+  	<script src="js/jquery-3.3.1.js"></script>
+    <script src="js/fields.js"></script>
+    <script src="js/walker.js"></script>
+  	<script src="js/maze.js"></script>
+  	<script src="js/solver.js"></script>
+  	<script src="js/sketch.js"></script>
+  	<script src="js/menu.js"></script>
+  	<script src="js/setup.js"></script>
+  	<script src="js/backend.js"></script>
+  	<link rel="stylesheet" type="text/css" href="css/style.css">
+  	<meta charset="utf-8">
+  </head>
+
+  <body>
+    <header>
+      <div class="lname">
+        Labyrinth-Löser
+      </div>
+    </header>
+
+    <div id="menu" class="menu">
+      <button id="bmaze" class="active">Labyrinth</button>
+      <button id="bhelp" class="">Hilfe</button>
+      <button id="bprofile" class="">Profil</button>
+      <button id="blogin" class="logbutton" data-toggle="modal" data-target="login-modal">Login</button>
+    </div>
+
+    <div id="dmaze" class="maze">
+      <!--Labyrinth-Tab-->
+      <div id="option-container">
+        <select id="dropbox1" title="Lösungsverfahren für das linke Labyrinth" class="dropBoxes">
+          <option value="rightHand">Rechte Hand</option>
+          <option value="leftHand">Linke Hand</option>
+          <option value="leastVisited">Least Visited</option>
+        </select>
+        <button class="optButtons" title="Starten,Pausieren,Fortsetzen oder Zurücksetzen des Lösens" id="startbutton">Start!</button>
+        <button class="optButtons" title="setzt das Labyrinth zurück" id="restartbutton">Reset!</button>
+        <button class="optButtons" title="öffnet die Einstellungen für das Generieren des Labyrinthes und den Optionen für den Läufer" id="setupbutton">Einstellungen</button>
+        <select id="dropbox2" title="Lösungsverfahren für das rechte Labyrinth" class="dropBoxes">
+          <option value="user" selected>Nutzer</option>
+          <option value="rightHand">Rechte Hand</option>
+          <option value="leftHand">Linke Hand</option>
+          <option value="leastVisited">Least Visited</option>
+        </select>
+      </div>
+      <div id="maze-container">
+      </div>
+    </div>
+
+    <div id="dhelp" class="help hidden">
+      <!--Hilfe-Tab-->
+      <h1>Wie wird gespielt?</h1>
+      <div>
+        Gespielt werden kann sowohl mit den Pfeiltasten als auch mit ASDW.<br>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="10.061394380853258 19.17025007837475 262.792924037461 91.29072806938801" width="297" height="100.18">
+          <defs>
+            <path d="M53.94 23.87L94.28 23.87L94.28 64.2L53.94 64.2L53.94 23.87Z" id="c1tUomUs2f"></path>
+            <path d="M56.77 43.57L74.11 28.12L91.45 43.57L80.46 43.57L80.46 59.96L67.74 59.96L67.74 43.57L56.77 43.57Z" id="a3az0N4c8B"></path>
+            <path d="M137.44 67.13L137.44 107.46L97.11 107.46L97.11 67.13L137.44 67.13Z" id="b4qc5g4SfN"></path><path d="M117.74 69.96L133.19 87.29L117.74 104.63L117.74 93.64L101.35 93.64L101.35 80.92L117.74 80.92L117.74 69.96Z" id="g9Pxs5CLYf"></path>
+            <path d="M53.94 107.46L94.28 107.46L94.28 67.13L53.94 67.13L53.94 107.46Z" id="aEIVaWb4w"></path>
+            <path d="M56.77 87.76L74.11 103.22L91.45 87.76L80.46 87.76L80.46 71.37L67.74 71.37L67.74 87.76L56.77 87.76Z" id="c34Fw6hSd0"></path>
+            <path d="M11.06 107.46L11.06 67.13L51.39 67.13L51.39 107.46L11.06 107.46Z" id="aj756R9MZ"></path>
+            <path d="M30.76 104.63L15.31 87.29L30.76 69.96L30.76 80.95L47.15 80.95L47.15 93.67L30.76 93.67L30.76 104.63Z" id="aTEa35Q7A"></path>
+            <path d="M186.36 23.87L226.69 23.87L226.69 64.2L186.36 64.2L186.36 23.87Z" id="c1wEaXvE8z"></path>
+            <path d="M269.85 67.13L269.85 107.46L229.52 107.46L229.52 67.13L269.85 67.13Z" id="j1fRDEFJp3"></path>
+            <path d="M186.36 107.46L226.69 107.46L226.69 67.13L186.36 67.13L186.36 107.46Z" id="bPiqjFzzt"></path>
+            <path d="M143.48 107.46L143.48 67.13L183.81 67.13L183.81 107.46L143.48 107.46Z" id="a6jugPdxK2"></path>
+
+            <text id="a4GEdv7eC" x="167.87" y="160.48" font-size="36" font-family="Open Sans" font-weight="normal" font-style="normal" letter-spacing="0" alignment-baseline="before-edge" transform="matrix(1 0 0 1 -15.54630593132157 -94.2987694042187)" style="line-height:100%" xml:space="preserve" dominant-baseline="text-before-edge">
+              <tspan x="167.87" dy="0em" alignment-baseline="before-edge" dominant-baseline="text-before-edge" text-anchor="start">A</tspan>
+            </text>
+            <text id="h30933Pskl" x="167.87" y="160.48" font-size="36" font-family="Open Sans" font-weight="normal" font-style="normal" letter-spacing="0" alignment-baseline="before-edge" transform="matrix(1 0 0 1 27.336108220603535 -94.2987694042187)" style="line-height:100%" xml:space="preserve" dominant-baseline="text-before-edge">
+              <tspan x="167.87" dy="0em" alignment-baseline="before-edge" dominant-baseline="text-before-edge" text-anchor="start">S</tspan>
+            </text>
+            <text id="b1b7kqcEU8" x="167.87" y="160.48" font-size="36" font-family="Open Sans" font-weight="normal" font-style="normal" letter-spacing="0" alignment-baseline="before-edge" transform="matrix(1 0 0 1 71.06614102766005 -94.2987694042187)" style="line-height:100%" xml:space="preserve" dominant-baseline="text-before-edge">
+              <tspan x="167.87" dy="0em" alignment-baseline="before-edge" dominant-baseline="text-before-edge" text-anchor="start">D</tspan>
+            </text>
+            <text id="b1feKPvgmg" x="168.87" y="160.48" font-size="36" font-family="Open Sans" font-weight="normal" font-style="normal" letter-spacing="0" alignment-baseline="before-edge" transform="matrix(1 0 0 1 22.102727739698338 -135.3136208893672)" style="line-height:100%" xml:space="preserve" dominant-baseline="text-before-edge">
+              <tspan x="167.87" dy="0em" alignment-baseline="before-edge" dominant-baseline="text-before-edge" text-anchor="start">W</tspan>
+            </text>
+          </defs>
+
+          <g>
+            <g><use xlink:href="#c1tUomUs2f" opacity="1" fill="#b0b0b0" fill-opacity="1"></use></g>
+            <g><use xlink:href="#a3az0N4c8B" opacity="1" fill="#2a2a2a" fill-opacity="1"></use></g>
+            <g><use xlink:href="#b4qc5g4SfN" opacity="1" fill="#b0b0b0" fill-opacity="1"></use></g>
+            <g><use xlink:href="#g9Pxs5CLYf" opacity="1" fill="#2a2a2a" fill-opacity="1"></use></g>
+            <g><use xlink:href="#aEIVaWb4w" opacity="1" fill="#b0b0b0" fill-opacity="1"></use></g>
+            <g><use xlink:href="#c34Fw6hSd0" opacity="1" fill="#2a2a2a" fill-opacity="1"></use></g>
+            <g><use xlink:href="#aj756R9MZ" opacity="1" fill="#b0b0b0" fill-opacity="1"></use></g>
+            <g><use xlink:href="#aTEa35Q7A" opacity="1" fill="#2a2a2a" fill-opacity="1"></use></g>
+            <g><use xlink:href="#c1wEaXvE8z" opacity="1" fill="#b0b0b0" fill-opacity="1"></use></g>
+            <g><use xlink:href="#j1fRDEFJp3" opacity="1" fill="#b0b0b0" fill-opacity="1"></use></g>
+            <g><use xlink:href="#bPiqjFzzt" opacity="1" fill="#b0b0b0" fill-opacity="1"></use></g>
+            <g><use xlink:href="#a6jugPdxK2" opacity="1" fill="#b0b0b0" fill-opacity="1"></use></g>
+            <g id="bQLcnoM0B"><use xlink:href="#a4GEdv7eC" opacity="1" fill="#0c1212" fill-opacity="1"></use></g>
+            <g id="b2j36b8oag"><use xlink:href="#h30933Pskl" opacity="1" fill="#0c1212" fill-opacity="1"></use></g>
+            <g id="aoSs8EGjT"><use xlink:href="#b1b7kqcEU8" opacity="1" fill="#0c1212" fill-opacity="1"></use></g>
+            <g id="b59SK7hzLx"><use xlink:href="#b1feKPvgmg" opacity="1" fill="#0c1212" fill-opacity="1"></use></g>
+          </g>
+        </svg><br>
+        Dabei ist die Blickrichtung des Läufers egal. Durch drücken der jeweiligen Tasten kann der Läufer bewegt werden, jedoch nur zwischen Feldern, welche nicht durch Mauern voneinander getrennt sind.<br>
+        <img src="images/unableWalk.png">
+        <img src="images/ableWalk.png"><br>
+      </div>
+      <h1>Ziel eines Labyrinthes</h1>
+      <div>
+        Das Zeil eines Labyrinthes ist es dies zu Lösen, indem man vom Startfeld zum Zielfeld kommt. Dabei kommt es grundsätzlich nicht auf die Dauer oder die Schritte an, die benötigt werden um es zu Lösen, sondern eher dass man es lösen kann. Geübte Spieler können dann auf Schrittzahl und Zeit achten, die sie verwenden um es zu Lösen und können dies dann auch, wenn man angemeldet ist, mit vorangegangenen Spielen und den Ergebnissen der eingestellten Lösungsverfahren vergleichen.
+      </div>
+      <h1>Lösungsverfahren</h1>
+      <div>
+        Zum Lösen eines Labyrinthes gibt es sehr viele Möglichkeiten, von denen wir 3 eingebaut haben. Zusätzlich gibt es die Möglichkeit das Labyrinth selbst zu Lösen. Zum Lösen eines Labyrinthes muss das Labyrinth zwischen Start und Ziel einen Pfad haben, auf dem er, ohne durch eine Mauer gehen zu müssen, das Zielfeld erreichen kann<br>
+        <h3>Rechte Hand Verfahren</h3>
+        Das Recht Hand verfahren ist ein Lösungsverfahren, bei dem sich immer an der rechten Mauer orientiert wird. Dabei wird der Kontakt zur Mauer nie verloren, existiert jedoch am Startfeld keine Mauer umliegend, kann das Rechte Hand Verfahren keine Lösung erzielen.
+        Das Rechte Hand verfahren kann man sich ganz einfach Verdeutlichen, indem man sich vorstellt, man sei in einer Höhle und läuft immer mit der rechten Hand im Kontakt zur Wand.
+        <h3>Linke Hand Verfahren</h3>
+        Das Linke Hand Verfahren ist im Grunde wie das Rechte Hand Verfahren, nur richtet es sich danach, immer auf der Linken Seite eine Mauer zu haben.
+        <h3>Least Visited Verfahren</h3>
+        Das Least Visited Verfahren ist das komplexeste unserer Verfahren. Es orientiert sich nicht an den Mauern, wie die Hand Verfahren, sondern entscheidet zuerst nach der Anzahl der Besuche eines Feldes und anschließend wenn nötig nach Zufall, welchen Weg er nimmt. Jedoch gibt es für das betreten eines Feldes einige Bedingungen:
+        <ul>
+          <li>Die Anzahl der Besuche des Feldes welches der Läufer betreten will, ist kleiner als die der anderen umliegenden Felder, welche betreten werden können,</li>
+          <li>Zwischen den Feldern liegt keine Mauer,</li>
+          <li>Ist die niedrigste Anzahl von umliegenden Felder gleich, entscheidet der Zufall welches Feld betreten wird.</li>
+        </ul>
+        Nur Wenn alle diese Bedingungen eintreten, kann der Läufer sich bewegen.
+        Jedoch ist es möglich, dass der Läufer Wege nimmt, welche ihn wieder vom Zielfeld entfernen, da der Zufall entscheidet und es egal ist ob das Feld, auf welchem er sich befindet, näher am Ziel ist als das Feld, welches er besuchen möchte. Aber kein Grund zur Sorge, das Ziel findet er dennoch, insofern sich zwischen Start- und Zielfeld ein Pfad befindet, der nicht durch eine Mauer unterbrochen wird.
+      </div>
+      <h1>Optionen</h1>
+      <div>
+        <h3>Labyrinthoptionen</h3>
+        Das Labyrinth kann durch das öffnen der Einstellungen bearbeitet werden. Folgende Eigenschaften kann man bearbeiten:
+        <ul>
+          <li> Höhe und Breite</li>
+          <li> Start und Ziel</li>
+          <li> Warscheinlichkeit von Mauern</li>
+        </ul>
+        Zusätzlich gibt es die Möglichkeit selbst einzustellen durch welche Methoden das Labyrinth erstellt wird. Diese sind:
+        <ul>
+          <li>Generiert
+            <ul>
+              <li>Feld wird zufällig generiert und auf lösbarkeit geprüft</li>
+              <li>Maximale Größe: 40x40 Felder</li>
+            </ul>
+          </li>
+          <li>Zufall
+            <ul>
+              <li>Feld wird zufällig generiert, kann jedoch unlösbar sein</li>
+              <li>Maximale Größe: 40x40 Felder</li>
+            </ul>
+          </li>
+          <li>Selbst
+            <ul>
+              <li>Feld wird durch den Nutzer selbst erstellt</li>
+              <li>Nutzer setzt Mauern selbst</li>
+              <li>Maximale Größe: 20x20 Felder</li>
+            </ul>
+          </li>
+        </ul>
+        Neben diesen Optionen gibt es auch festgelegte Schwierigkeitsgrade:
+        <ul>
+          <li>Einfach (10x10 Felder)</li>
+          <li>Mittel (15x15 Felder)</li>
+          <li>Schwer (20x20 Felder)</li>
+        </ul>
+        Alle diese Einstellungen erfordern das Neugenerieren des Labyrinthes.
+        <h3>Läuferoptionen</h3>
+        Für den Läufer gibt es nur folgende 3 Einstellungen:
+        <ul>
+          <li>Spur
+            <ul>
+              <li>Zeigt die Anzahl der Besuche pro Feld</li>
+            </ul>
+          </li>
+          <li>Smart Mode
+            <ul>
+              <li>Effekt nur bei Handverfahren</li>
+              <li>Wenn ein Feld das 5.Mal besucht wird, bricht das Lösen ab.</li>
+              <li>Wenn Feld 5 mal besucht, kein Lösen in allen 4 Richtungen möglich.</li>
+            </ul>
+          </li>
+          <li>Schritte pro Sekunde
+            <ul>
+              <li>Definiert die Anzahl Schritte pro Sekunde</li>
+            </ul>
+          </li>
+        </ul>
+        Diese Einstellungen können Live geändert werden.
+      </div>
+    </div>
+
+    <div id="dprofile" class="profile hidden">
+      <!--Profil-Tab-->
+      <div id="inProfileDiv" class="hidden">
+        <div id="profileInfo">
+        </div>
+        <div class="profileForm">
+          <button id="changepw" class="profileButton">Passwort ändern</button>
+          <button id="delete" class="profileButton">Profil löschen</button>
+          <div id="changeDiv" class="hidden profileForm">
+            <input id="oldpass" type="password" class="passwordInputs" name="oldpass" placeholder="Altes Passwort">
+            <input id="changepass" type="password" class="passwordInputs" name="changepass" placeholder="Neues Passwort"><br>
+            <input type="button" id="confirmChange" class="profileButton" value="Ändern">
+          </div>
+          <div id="deleteDiv" class="hidden profileForm">
+            <input id="deletepass" type="password" class="passwordInputs" name="deletepass" placeholder="Passwort"><br>
+            <input type="button" id="confirmDelete" class="profileButton" value="Löschen">
+          </div>
+        </div>
+        <div id="profileDiv">
+          <h3 class='profileText'>Hier wird Ihnen die Statistik zu dem derzeit generierten Labyrinth angezeigt. Dabei ist egal wie genau das Labyrinth aufgebaut ist. Es zählen die Rahmenbedingungen zum Labyrinth, wie Höhe, Breite und so weiter.</h3>
+          <button id="loadStats" title="Lädt die Statistik">Lade Statistik</button>
+        </div>
+        <div id="innerProfileDiv">
+        </div>
+      </div>
+      <div id="outProfileDiv" class="">
+        <h1 class="profileText">Lieber Nutzer, sie sind noch nicht angemeldet. Um Ihre Statistiken sehen zu können und um Ihr Profil zu Verwalten, müssen sie sich anmelden/registrieren.</h1>
+      </div>
+    </div>
+
+    <div class="modal" id="login-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-container">
+        <div class="closeDiv">
+          <h1 id="login-header">Anmeldung</h1>
+          <span id="loginClose" class="close">&times;</span><br>
+        </div>
+        <input id="user" type="text" name="user" placeholder="Benutzername" required="required">
+        <input id="pass" type="password" name="pass" placeholder="Passwort" required="required">
+  			<div class="modal-login-remember">
+          <input id="login-remember" type="checkbox" name="remember">Angemeldet bleiben?
+        </div>
+  			<input id="login-submit" type="submit" name="login" class="modal-login-submit" value="Anmelden">
+        <div class="login-register">
+          Noch nicht angemeldet? <a id="register" href="#">Jetzt registrieren!</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="setup-modal">
+      <div class="modal-container">
+        <form id="optform" action="javascript:void(0);">
+          <div id="optFormDiv">
+            <div class="closeDiv">
+              <h1>Einstellungen</h1><br>
+              <span id="optClose" class="close">&times;</span>
+            </div>
+            <table>
+              <tr>
+                <td>
+                  <div id="difficulty">Schwierigkeit:<br>
+                    <select id="difficultybox">
+                      <option selected="true">Einfach</option>
+                      <option>Mittel</option>
+                      <option>Schwer</option>
+                      <option>Benutzerdefiniert</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div id="genMethode">Generierungsmethode:<br>
+                    <input type="radio" class="setInput" name="methode" value="gen" checked="true">Generiert
+                    <input type="radio" class="setInput" name="methode" value="random">Zufall
+                    <input type="radio" class="setInput oC" name="methode" value="self">Selbst
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="inputs">
+            Anzahl der Zeilen Anzahl der Spalten<br>
+            <input required type="number" class="setInput aVC" name="height" id="heightInput" value="10" min="2" max="40" class="h/b">
+            <input required type="number" class="setInput aVC" name="widht" id="widthInput" value="10" min="2" max="40" class="h/b">
+            <br>
+            Start Koordinaten (Zeile/Spalte):<br>
+            <input required type="number" class="setInput aVC" name="yInputStart" id="yInputStart" value="1" min="1" max="10" class="h/b">
+            <input required type="number" class="setInput aVC" name="xInputStart" id="xInputStart" value="1" min="1" max="10" class="h/b">
+            <br>
+            Ziel Koordinaten (Zeile/Spalte):<br>
+            <input required type="number" class="setInput aVC" name="yInputGoal" id="yInputGoal" value="10" min="1" max="10" class="h/b">
+            <input required type="number" class="setInput aVC" name="xInputGoal" id="xInputGoal" value="10" min="1" max="10" class="h/b">
+            <br>
+            <div id="wskvalue" title="Eine Wand wird mit der angegebenen WSK generiert.">Warscheinlichkeit für Mauern: 0.4</div>
+            <input id="wskrange" type="range" class="setInput opn OC aVC" name="wsk" min="0" max="60" value="40">
+
+            <!--Die Einstellungen vielleicht wärend des "spielens" veränderbar ohne neu generieren
+              -> Unter den Gen button?-->
+            <br>
+          </div>
+          <br>
+          <input type="submit" id="genbutton" value="Generieren" title="Generiert ein neues Feld '\n' dem ausgewähltem Modus und Einstellungen entsprechend">
+          <div id="dcircle">
+            <section id="loadCircles">
+              <div class="circle0 circle"></div>
+              <div class="circle1 circle"></div>
+              <div class="circle2 circle"></div>
+              <div class="circle3 circle"></div>
+              <div class="circle4 circle"></div>
+              <div class="circle5 circle"></div>
+              <div class="circle6 circle"></div>
+              <div class="circle7 circle"></div>
+              <div class="circle8 circle"></div>
+              <div class="circle9 circle"></div>
+            </section>
+          </div>
+          <div>
+            <h2>Läufereinstellungen</h2>
+            <input checked="true" type="checkbox" id="line" class="setInput runner" title="Sichbarkeit bereits besuchter Felder">
+            <label for="line" title="Sichbarkeit bereits besuchter Felder">Spur</label>
+            <input checked="true" type="checkbox" id="smartMode" class="runner" title="Automatisches Stoppen der Hand-Verfahren, wenn kein Lösungspfad gefunden wird.">
+            <label for="smartMode" title="Automatisches Stoppen der Hand-Verfahren, wenn kein Lösungspfad gefunden wird.">Smart Mode</label>
+            <div id="stepsPerSecondValue" title="steigende Ungenauigkeit mit erhöhter Feldgröße.">Schritte pro Sekunde &asymp; 10</div>
+            <input id="stepsPerSecond" type="range" class="opn runner" min="1" max="100" value="10" step="1">
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="mazechoose-modal">
+      <div class="choose-modal-container" id="chooseCloseId">
+        <div class="closeDiv">
+          <span id="chooseClose" class="closeSelf">&times;</span>
+        </div>
+        <button id="fillAllWalls" class="chooseButtons">Alle Mauern setzen</button>
+        <button id="clearAllWalls" class="chooseButtons">Alle Mauern löschen</button>
+        <button id="fillRandomWalls" class="chooseButtons">Zufällig Mauern setzen</button>
+        <div id="choosemaze">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,597 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.maze {
+  outline: none;
+  background-color: #ffffff;
+  float: left;
+  width: 100%;
+  margin: 1% 0 0 0;
+}
+#mazeId{
+  padding: 1% 5% 0%;
+}
+#option-container{
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0% 5%;
+}
+#option-container button, #option-container select{
+  padding: 5px;
+  font-size: 20px;
+  margin: 0 10px;
+  outline: none;
+  box-shadow: 0px 2px rgba(0,0,0,0.4);
+}
+#maze-container{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
+
+header {
+  margin:1%;
+  display: block;
+  text-align: center;
+}
+
+.lname {
+  text-align: center;
+  font-size: 30px;
+  color: #FF0000;
+}
+
+.menu {
+  outline: none;
+  overflow: hidden;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu button{
+  outline: none;
+  float: left;
+  color: #000000;
+  text-align: center;
+  padding: 14px 14px;
+  margin: -1px;
+  text-decoration: none;
+  font-size: 25px;
+  border: 0px;
+  width: 26.67%;
+}
+
+.menu button.logbutton {
+  width: 20%;
+  background-color: #2050ff;
+}
+
+.menu button.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.menu button:hover {
+  color: #00FF00;
+  background-color: #000000;
+}
+/****** BUTTONS GRAFICS ******/
+.optButtons{
+  outline: none;
+  border-radius: 10px 10px 10px 10px;
+  border: solid grey 1px;
+  color: #000000;
+  background-color: #A4F760;
+}
+#genbutton{
+  outline: none;
+  border-radius: 3px;
+  border-style: solid 1px;
+  border-color: #30C0E0;
+  background-color: #38C7E3;
+  box-shadow: 0px 2px rgba(0,0,0,0.4);
+}
+.dropBoxes{
+  outline: none;
+  background-color: #A7F3E1;
+  border: 0px solid transparent;
+  border-radius: 30px 6px;
+}
+/******INPUT RANGE******/
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 0px solid #000000;
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
+  background: lightgrey;
+  cursor: pointer;
+  margin-top: -6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: black;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+/****** CLOSE SPAN ******/
+.closeDiv{
+  text-align: center;
+  position: relative;
+}
+.closeSelf{
+  position: absolute;
+  right: -20px;
+  top: -35px;
+  color: #000000;
+  font-size: 35px;
+  font-weight: bold;
+}
+.close {
+  position: absolute;
+  right: -20px;
+  top: -50px;
+  color: #000000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus,
+.closeSelf:hover,
+.closeSelf:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/****** LOADANIMATION ******/
+#dcircle{
+  outline: none;
+  display:none;
+  align-items: center;
+  justify-content: center;
+}
+#loadCircles{
+  outline: none;
+  margin: 5px -7.5px;
+  width: 15px;
+  height: 15px;
+  position:relative;
+}
+
+#loadCircles .circle {
+  outline: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#loadCircles .circle:before {
+  outline: none;
+  content: '';
+  display: block;
+  width: 5px;
+  height: 5px;
+  background-color: #06D6A9;
+  border-radius: 50%;
+  animation: lebe 1s infinite linear;
+}
+
+#loadCircles .circle0{
+  transform: rotate(36deg);
+}
+#loadCircles .circle1 {
+  transform: rotate(72deg);
+}
+#loadCircles .circle2 {
+  transform: rotate(108deg);
+}
+#loadCircles .circle3 {
+  transform: rotate(144deg);
+}
+#loadCircles .circle4 {
+  transform: rotate(180deg);
+}
+#loadCircles .circle5 {
+  transform: rotate(216deg);
+}
+#loadCircles .circle6 {
+  transform: rotate(252deg);
+}
+#loadCircles .circle7 {
+  transform: rotate(288deg);
+}
+#loadCircles .circle8 {
+  transform: rotate(324deg);
+ }
+#loadCircles .circle9 {
+  transform: rotate(360deg);
+}
+
+
+#loadCircles .circle1:before {
+  animation-delay: -0.9s;
+}
+#loadCircles .circle2:before {
+  animation-delay: -0.8s;
+}
+#loadCircles .circle3:before {
+  animation-delay: -0.7s;
+}
+#loadCircles .circle4:before {
+  animation-delay: -0.6s;
+}
+#loadCircles .circle5:before {
+  animation-delay: -0.5s;
+}
+#loadCircles .circle6:before {
+  animation-delay: -0.4s;
+}
+#loadCircles .circle7:before {
+  animation-delay: -0.3s;
+}
+#loadCircles .circle8:before {
+  animation-delay: -0.2s;
+}
+#loadCircles .circle9:before {
+  animation-delay: -0.1s;
+}
+
+
+@keyframes lebe {
+   0%, 50% {opacity: 0}
+   51% {opacity: 1}
+   100%{opacity: 0}
+}
+.profileButton{
+  margin: 5px 0 5px 0;
+  border-radius: 10px 10px;
+  padding: 10px 5px;
+  outline:none;
+  background-color: #41EEAC;
+  border-color: #41EEAC;
+  font-size: 15px;
+}
+#confirmDelete{
+  margin: 5px auto;
+}
+#confirmChange{
+  margin: 5px auto;
+}
+.profileText{
+  text-align:center;
+  padding: 10px;
+}
+#oldpass{
+  outline:none;
+  margin: auto;
+  width: auto;
+  border-radius: 10px;
+}
+#deletepass{
+  outline:none;
+  margin: auto;
+  width: auto;
+  border-radius: 10px;
+}
+#changepass{
+  outline:none;
+  margin: auto;
+  width: auto;
+  border-radius: 10px;
+}
+.profileForm{
+  text-align:center;
+  align-content: center;
+  align-items: center;
+}
+.statTable{
+  text-align: center;
+  margin: auto;
+}
+.highscoreGold{
+  background-color: #FFD700;
+}
+.highscoreSilver{
+  background-color: #B6B6B6;
+}
+.highscoreBronce{
+  background-color: #CD7F32;
+}
+#profileDiv{
+  align-items: center;
+  align-content: center;
+  text-align: center;
+}
+#loadStats{
+  outline: none;
+  padding: 5px 5px;
+  border-radius: 10px 10px;
+  box-shadow: 2px rgba(0,0,0,0.4);
+  background-color:#41EEAC;
+  border-color: #41EEAC;
+}
+/****** SETUP MODAL ******/
+#setup-modal.modal-container * {
+  margin: 1%;
+}
+/****** LOGIN MODAL ******/
+
+.modal {
+  outline: none;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  background-color: rgba(0,0,0,0.8);
+}
+
+.modal-container {
+  outline: none;
+  padding: 30px;
+  max-width: 350px;
+  width: 100% !important;
+  background-color: #F7F7F7;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  font-family: roboto;
+}
+
+.modal-container h1 {
+  text-align: center;
+  font-size: 1.8em;
+  font-family: roboto;
+}
+
+.modal-container input[type=submit] {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.modal-container-error {
+  border: 2px solid #ff0000 !important;
+}
+
+.modal-container input[type=text],
+input[type=password] {
+  height: 44px;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-top: 1px solid #c0c0c0;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+/****** CHOOSE MODAL ******/
+#mazechoose-modal{
+  z-index: 2;
+}
+.choose-modal-container {
+  text-align: center;
+  outline: none;
+  padding: 30px;
+  background-color: #F7F7F7;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  font-family: roboto;
+}
+
+
+#choosemaze{
+  border:1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px;
+}
+
+.placeholderButton{
+  display: none;
+  height: 2px;
+  width: 20px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+.boderSpacing{
+  min-width: 100px;
+  border-spacing: 0px 0px;
+}
+
+.mazeButton{
+  background: #FFFFFF;
+  border: 1px solid #d9d9d9;
+  border-radius: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.mazeButton:hover{ 
+  border: 1px solid #000000;
+  cursor: pointer;
+}
+
+.verticalButton{
+  height: 20px;
+  width: 2px;
+  margin-left: 0;
+  margin-top: 0;
+  
+}
+
+.horizontalButton{
+  height: 2px;
+  width: 20px;
+  margin-left: 0px;
+  margin-top: 20px;
+}
+
+.buttonChoosen{
+  background: #000000;
+  border: 1px solid #000000;
+}
+
+.buttonChoosen:hover{
+  border: 1px solid #FFFFFF;
+}
+
+.startField{
+  background: #00FF00;
+}
+
+.goalField{
+  background: #FF0000;
+}
+#optFormDiv table{
+  width:100%;
+}
+#difficulty{
+  width:100%;
+}
+#genMethode{
+  width: 100%;
+}
+.modal-container input[type=number] {
+  height: 20px;
+  font-size: 16px;
+  width: 49%;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-top: 1px solid #c0c0c0;
+  padding: 0 8px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+
+.chooseButtons{
+  background-color: #F8BE58;
+  border: 1px solid #F8A007;
+  border-radius: 3px;
+  box-shadow: 0px 2px rgba(0,0,0,0.1);
+}
+#dhelp{
+  margin: 15px;
+  font-size: 20px;
+}
+#dhelp img{
+  margin: 0px 30px;
+}
+.modal-container input[type=text]:hover,
+input[type=password]:hover {
+  border: 1px solid #b9b9b9;
+  border-top: 1px solid #a0a0a0;
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.modal-login-submit {
+  border: 0px;
+  color: #fff;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  background-color: #4d90fe;
+  padding: 17px 0px;
+  font-family: roboto;
+  font-size: 14px;
+}
+
+.modal-login-register {
+  background-color: #209b11 !important;
+  font-weight: 100;
+}
+
+.modal-login-submit:hover {
+  border: 0px;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  background-color: #357ae8;
+}
+
+.modal-login-register:hover {
+  background-color: #209b11 !important;
+}
+
+.modal-login-remember {
+  text-align: left;
+  font-weight: 100;
+  margin: 1% 0;
+}
+
+.modal-login-msg {
+  margin: 4% 0;
+  padding: 4% 0;
+}
+
+.modal-login-msg-error {
+  background-color: #fd00009c;
+}
+
+.modal-login-msg-ok {
+  background-color: #03ad00;
+}
+
+.modal-container a {
+  text-decoration: none;
+  color: #666;
+  font-weight: 400;
+  text-align: center;
+  display: inline-block;
+  opacity: 0.6;
+  transition: opacity ease 0.5s;
+}
+
+.login-help {
+  font-size: 12px;
+}
